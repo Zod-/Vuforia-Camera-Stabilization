@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using System;
 using UnityEngine;
 
 namespace HoloToolkit.Unity.InputModule
@@ -9,7 +10,7 @@ namespace HoloToolkit.Unity.InputModule
     /// GazeStabilizer iterates over samples of Raycast data and
     /// helps stabilize the user's gaze for precision targeting.
     /// </summary>
-    public class GazeStabilizer : BaseRayStabilizer
+    public class VuforiaStabilizer : BaseRayStabilizer
     {
         [Tooltip("Number of samples that you want to iterate on.")]
         [Range(40, 120)]
@@ -71,7 +72,7 @@ namespace HoloToolkit.Unity.InputModule
         /// </summary>
         private const float StabalizedLerpBoost = 10.0f;
 
-        private void Awake()
+        public VuforiaStabilizer()
         {
             directionRollingStats.Init(StoredStabilitySamples);
             positionRollingStats.Init(StoredStabilitySamples);
@@ -98,8 +99,7 @@ namespace HoloToolkit.Unity.InputModule
             {
                 // We've detected that the user's gaze is no longer fixed, so stop stabalizing so that gaze is responsive.
                 //Debug.LogFormat("Reset {0} {1} {2} {3}", positionRollingStats.standardDeviation, positionRollingStats.standardDeviationsAway, directionRollignStats.standardDeviation, directionRollignStats.standardDeviationsAway);
-                positionRollingStats.Reset();
-                directionRollingStats.Reset();
+                Reset();
             }
             else if (positionRollingStats.ActualSampleCount > MinimumSamplesRequiredToStabalize)
             {
@@ -110,6 +110,12 @@ namespace HoloToolkit.Unity.InputModule
             stablePosition = Vector3.Lerp(stablePosition, gazePosition, lerpPower);
             stableRotation = Quaternion.LookRotation(Vector3.Lerp(stableRotation * Vector3.forward, gazeDirection, lerpPower));
             stableRay = new Ray(stablePosition, stableRotation * Vector3.forward);
+        }
+
+        public override void Reset()
+        {
+            positionRollingStats.Reset();
+            directionRollingStats.Reset();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace HoloToolkit.Unity.InputModule
     /// A base class for a stabilizer that takes an input position and orientation, and performs operations on them
     /// to stabilize, or smooth deltas, in the data. 
     /// </summary>
-    public abstract class BaseRayStabilizer : MonoBehaviour
+    public abstract class BaseRayStabilizer
     {
         /// <summary>
         /// The stabilized position.
@@ -32,5 +32,11 @@ namespace HoloToolkit.Unity.InputModule
         /// <param name="position">Input position to smooth.</param>
         /// <param name="rotation">Input orientation to smooth.</param>
         public abstract void UpdateStability(Vector3 position, Quaternion rotation);
+
+        /// <summary>
+        /// Resets the stabilization data.
+        /// </summary>
+        public abstract void Reset();
+
     }
 }
