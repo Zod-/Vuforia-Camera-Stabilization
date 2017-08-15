@@ -3,7 +3,12 @@ using UnityEngine;
 
 public class CameraStabilization : MonoBehaviour
 {
-    private readonly BaseRayStabilizer _rayStabilizer = new VuforiaStabilizer();
+    private BaseRayStabilizer _rayStabilizer;
+
+    private void Awake()
+    {
+        _rayStabilizer = new VuforiaStabilizer();
+    }
 
     private void OnEnable()
     {
