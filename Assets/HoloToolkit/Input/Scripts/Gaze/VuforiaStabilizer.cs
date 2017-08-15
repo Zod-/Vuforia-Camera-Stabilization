@@ -81,7 +81,6 @@ namespace HoloToolkit.Unity.InputModule
         {
             directionRollingStats.Init(StoredStabilitySamples);
             positionRollingStats.Init(StoredStabilitySamples);
-            MainCamera = Camera.main;
         }
 
         /// <summary>
@@ -92,6 +91,10 @@ namespace HoloToolkit.Unity.InputModule
         /// <param name="rotation">Rotation value from a RaycastHit rotation.</param>
         public override void UpdateStability(Vector3 position, Quaternion rotation)
         {
+            if (MainCamera == null)
+            {
+                MainCamera = Camera.main;
+            }
             Vector3 gazePosition = position;
             Vector3 gazeDirection = rotation * Vector3.forward;
 
