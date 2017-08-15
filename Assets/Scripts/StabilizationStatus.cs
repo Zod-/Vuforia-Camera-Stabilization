@@ -17,4 +17,10 @@ public class StabilizationStatus : MonoBehaviour
         _onText.SetActive(_stabilizationBehaviour.enabled);
         _offText.SetActive(!_stabilizationBehaviour.enabled);
     }
+
+    public void ToggleStabilization()
+    {
+        if (_stabilizationBehaviour == null) { return; }
+        _stabilizationBehaviour.enabled = !_stabilizationBehaviour.enabled;
+    }
 }
