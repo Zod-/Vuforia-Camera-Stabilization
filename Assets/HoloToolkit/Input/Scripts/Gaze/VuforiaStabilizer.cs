@@ -72,10 +72,16 @@ namespace HoloToolkit.Unity.InputModule
         /// </summary>
         private const float StabalizedLerpBoost = 10.0f;
 
+        /// <summary>
+        /// Cache camera so we don't have to call Camera.main every frame, which does a FindByTag on the scene.
+        /// </summary>
+        public Camera MainCamera;
+
         public VuforiaStabilizer()
         {
             directionRollingStats.Init(StoredStabilitySamples);
             positionRollingStats.Init(StoredStabilitySamples);
+            MainCamera = Camera.main;
         }
 
         /// <summary>
@@ -108,7 +114,7 @@ namespace HoloToolkit.Unity.InputModule
             }
 
             stablePosition = Vector3.Lerp(stablePosition, gazePosition, lerpPower);
-            stableRotation = Quaternion.LookRotation(Vector3.Lerp(stableRotation * Vector3.forward, gazeDirection, lerpPower));
+            stableRotation = Quaternion.LookRotation(Vector3.Lerp(stableRotation * Vector3.forward, gazeDirection, lerpPower), MainCamera.transform.up);
             stableRay = new Ray(stablePosition, stableRotation * Vector3.forward);
         }
 
