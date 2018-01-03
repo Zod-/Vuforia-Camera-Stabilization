@@ -3,24 +3,31 @@
 public class StabilizationStatus : MonoBehaviour
 {
     [SerializeField]
-    private MonoBehaviour _stabilizationBehaviour;
+    private GameObject _stabilizerHolder;
     [SerializeField]
     private GameObject _onText;
     [SerializeField]
     private GameObject _offText;
 
+    private IStabilizer _stabilizer;
+
+
+    private void Awake()
+    {
+        _stabilizer = _stabilizerHolder.GetComponent<IStabilizer>();
+    }
 
     private void Update()
     {
-        if (_stabilizationBehaviour == null) { return; }
+        if (_stabilizer == null) { return; }
 
-        _onText.SetActive(_stabilizationBehaviour.enabled);
-        _offText.SetActive(!_stabilizationBehaviour.enabled);
+        _onText.SetActive(_stabilizer.IsStabilizing);
+        _offText.SetActive(!_stabilizer.IsStabilizing);
     }
 
     public void ToggleStabilization()
     {
-        if (_stabilizationBehaviour == null) { return; }
-        _stabilizationBehaviour.enabled = !_stabilizationBehaviour.enabled;
+        if (_stabilizer == null) { return; }
+        _stabilizer.IsStabilizing = !_stabilizer.IsStabilizing;
     }
 }

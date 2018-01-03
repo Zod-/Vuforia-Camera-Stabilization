@@ -2,9 +2,10 @@
 using UnityEngine;
 using Vuforia;
 
-public class CameraStabilizationUsingCallback : MonoBehaviour
+public class CameraStabilizationUsingCallback : MonoBehaviour, IStabilizer
 {
     private readonly BaseRayStabilizer _rayStabilizer = new VuforiaStabilizer();
+    public bool IsStabilizing { get; set; }
 
     private void OnEnable()
     {
@@ -20,8 +21,11 @@ public class CameraStabilizationUsingCallback : MonoBehaviour
     private void OnTrackablesUpdated()
     {
         _rayStabilizer.UpdateStability(transform.localPosition, transform.localRotation);
-
-        transform.localPosition = _rayStabilizer.StablePosition;
-        transform.localRotation = _rayStabilizer.StableRotation;
+        if (IsStabilizing)
+        {
+            transform.localPosition = _rayStabilizer.StablePosition;
+            transform.localRotation = _rayStabilizer.StableRotation;
+        }
     }
+
 }

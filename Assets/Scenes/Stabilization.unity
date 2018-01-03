@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4327fbaf12025dc40aa451f43e4f2aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stabilizationBehaviour: {fileID: 1025482148}
+  _stabilizerHolder: {fileID: 1025482147}
   _onText: {fileID: 542800205}
   _offText: {fileID: 1997205319}
 --- !u!43 &447070627
@@ -637,7 +637,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1025482147}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c703fe5654853548adcb02c22108264, type: 3}
   m_Name: 
